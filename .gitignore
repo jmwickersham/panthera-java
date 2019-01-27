@@ -1,1 +1,3 @@
 *.properties
+.idea/libraries
+.idea/codeStyles
