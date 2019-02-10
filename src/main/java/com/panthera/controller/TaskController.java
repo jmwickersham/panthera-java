@@ -15,17 +15,23 @@ public class TaskController {
   @Autowired
   private TaskRepository taskRepository;
 
-  @GetMapping("/tasks")
+  @GetMapping("/api/tasks")
   public Page<Task> getTasks(Pageable pageable) {
     return taskRepository.findAll(pageable);
   }
 
-  @PostMapping("/tasks")
+  @GetMapping("/api/tasks/{taskId}")
+  public Task getTask(@PathVariable Long taskId) {
+    return taskRepository.findById(taskId)
+        .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
+  }
+
+  @PostMapping("/api/tasks")
   public Task createTask(@Valid @RequestBody Task task) {
     return taskRepository.save(task);
   }
 
-  @PutMapping("/tasks/{taskId}")
+  @PutMapping("/api/tasks/{taskId}")
   public Task updateTask(@PathVariable Long taskId, @Valid @RequestBody Task taskRequest) {
     return taskRepository.findById(taskId)
         .map(task -> {
@@ -35,7 +41,7 @@ public class TaskController {
         }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
   }
 
-  @DeleteMapping("/tasks/{taskId}")
+  @DeleteMapping("/api/tasks/{taskId}")
   public ResponseEntity<?> deleteTask(@PathVariable Long taskId) {
     return taskRepository.findById(taskId)
         .map(task -> {

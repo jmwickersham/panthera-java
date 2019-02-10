@@ -1,0 +1,11 @@
+## Spring DATASOURCE (DataSourceAutoConfigration & DataSourceProperties)
+spring:
+  datasource:
+    url:jdbc: postgresql://localhost:5432/panthera
+    username: panthera
+    password: password1
+  jpa: # The SQL dialect makes Hibernate generate better SWL for the chosen database
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update # Hibernate ddl auto (create, create-drop, validate, update)
